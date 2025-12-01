@@ -1,5 +1,15 @@
 @import "tailwindcss";
+@import "@fontsource/poppins";
+
+body {
+    font-family: 'Poppins'
+}
 
 @theme {
     --color-mbl: #225D9F;
+    --color-red: #ff0000;
+    --color-medium: #225D9F;
+    --color-low: #225D9F;
+    --color-neutral: #225D9F;
+    --color-golden: #FA7E0C;
 }

@@ -1,6 +1,7 @@
 import Calendar from "@/components/Calender";
 import Image from "next/image";
 import Link from "next/link";
+import { CgCalendarDue, CgProfile } from "react-icons/cg";
 import { LuListTodo } from "react-icons/lu";
 
 export default function App({ children }: { children: React.ReactNode }) {
@@ -12,23 +13,43 @@ export default function App({ children }: { children: React.ReactNode }) {
 				</div>
 				<div className="px-4 py-6">
 					<Link href="/home" className="text-md">
-						All Tasks
+						<p className="text-md py-1 items-baseline">
+							<LuListTodo
+								fill="true"
+								className="inline-flex text-xl text-mbl items-center"
+							/>{" "}
+							All Task
+						</p>
 					</Link>
 					<Link href="/home" className="text-md">
-						<p>Today</p>
+						<p className="text-md py-1 items-baseline">
+							<CgCalendarDue className="inline-flex text-xl text-mbl items-center" />{" "}
+							Today
+						</p>
 					</Link>
 					<Link href="/home" className="text-md">
-						<p>Profile</p>
+						<p className="text-md py-1 items-baseline">
+							<CgProfile className="inline-flex text-xl text-mbl items-center" />{" "}
+							Profile
+						</p>
 					</Link>
 				</div>
 
 				<div className="px-4 py-6">
-					<button className="p-2 font-semibold hover:cursor-pointer bg-mbl text-white rounded-md w-full text-center">
+					<button className="p-2 text-sm font-semibold hover:cursor-pointer bg-mbl text-white rounded-md w-full text-center">
 						Create Task
 					</button>
 				</div>
 			</div>
-			<div>{children}</div>
+			<div className="overflow-y-auto">
+				<div className="p-2">
+					<h1 className="font-semibold py-1 text-3xl text-mbl">
+						👋 Hi, Developer.
+					</h1>
+					<hr className="text-golden pt-4" />
+				</div>
+				<div className="p-2">{children}</div>
+			</div>
 		</div>
 	);
 }
