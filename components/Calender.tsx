@@ -11,7 +11,7 @@ export default function Calendar() {
 	const todaydate = today.getDate();
 	const [calInfo, setCal] = useState(generator(todaymonth, todayyear));
 	const [select, setSelect] = useState({ row: 0, row2: 0 });
-	console.log(calInfo);
+
 	const forwardDate = () => {
 		let next = calInfo.next.order;
 		let newYear = calInfo.year;
