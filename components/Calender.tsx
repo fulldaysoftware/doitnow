@@ -11,7 +11,7 @@ export default function Calendar() {
 	const todaydate = today.getDate();
 	const [calInfo, setCal] = useState(generator(todaymonth, todayyear));
 	const [select, setSelect] = useState({ row: 0, row2: 0 });
-
+	const [selectedDate, setSelectedDate] = useState<Date>(today);
 	const forwardDate = () => {
 		let next = calInfo.next.order;
 		let newYear = calInfo.year;
@@ -59,17 +59,24 @@ export default function Calendar() {
 							<td className="text-xs border-b-2 border-mbl px-2">Sat</td>
 						</tr>
 					</thead>
-					<tbody>
-						{calInfo.days.map((it, ind) => {
+					<tbody className="pt-2">
+						{calInfo.days.map((it, indx) => {
 							return (
-								<tr key={ind}>
+								<tr key={indx}>
 									{it.map((mn, ind) => {
 										return (
 											<td
+												onClick={() => {
+													setSelect((prv) => {
+														return { ...prv, row: indx, row2: ind };
+													});
+												}}
 												key={ind}
-												className={`${
-													mn.t && "font-bold"
-												}  text-center text-xs p-2`}
+												className={`${mn.t && "font-bold"} ${
+													select.row == indx &&
+													select.row2 == ind &&
+													"bg-mbl text-white rounded-sm p-1"
+												} text-center cursor-pointer text-xs p-2`}
 											>
 												{mn.c}
 											</td>
