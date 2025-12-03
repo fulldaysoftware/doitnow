@@ -3,7 +3,10 @@
 
 body {
     font-family: 'Poppins'
+    
 }
+
+
 
 @theme {
     --color-mbl: #225D9F;
@@ -12,4 +15,21 @@ body {
     --color-low: #225D9F;
     --color-neutral: #225D9F;
     --color-golden: #FA7E0C;
+    --animate-slide: slide 3s ease-in-out infinite;
+
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(-50%);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(50%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%);
+    opacity: 0.5;
+  }
 }

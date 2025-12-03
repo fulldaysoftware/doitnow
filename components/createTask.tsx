@@ -1,15 +1,34 @@
 "use client";
 import { useAppContext } from "@/context/appcontext";
+import {
+	ChangeEvent,
+	ChangeEventHandler,
+	FormEvent,
+	TextareaHTMLAttributes,
+	useState,
+} from "react";
 import { CgClose } from "react-icons/cg";
 import { FcTodoList } from "react-icons/fc";
 import { GrDocumentTime } from "react-icons/gr";
 import { MdOutlinePriorityHigh } from "react-icons/md";
 import { SiDatev } from "react-icons/si";
 
+type taskType = {
+	task: string;
+	note: string;
+	duedate: string;
+	priority: string;
+};
+
 export default function CreateTaskDialog() {
 	const context = useAppContext();
 	const { isCreateTaskOpen, setIsCreateTaskOpen } = context;
-	console.log(isCreateTaskOpen);
+	const [taskfield, setTaskField] = useState<taskType>({
+		task: "",
+		duedate: "",
+		note: "",
+		priority: "",
+	});
 	return (
 		<dialog
 			className={`${
@@ -82,11 +101,19 @@ export default function CreateTaskDialog() {
 								<label className="px-2 text-md">Any Notes?</label>
 							</p>
 							<textarea
+								value={taskfield.note}
+								onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+									setTaskField((prv) => {
+										return { ...prv, note: e.target.value };
+									});
+								}}
 								rows={6}
 								maxLength={450}
 								className="w-full resize-none focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2"
 							></textarea>
-							<p className="text-xs">max: 500 chars</p>
+							<p className="text-xs">
+								max: {500 - taskfield.note.length} chars
+							</p>
 						</div>
 						<div className="p-1 w-full flex justify-end">
 							<button className="p-2 mx-2 text-sm font-semibold hover:cursor-pointer bg-golden text-white rounded-md text-center">

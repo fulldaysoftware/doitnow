@@ -5,6 +5,7 @@ import CreateTask from "@/components/createTaskbtn";
 import { AppContextProvider } from "@/context/appcontext";
 import Image from "next/image";
 import Link from "next/link";
+import { BiLogOut, BiLogOutCircle } from "react-icons/bi";
 
 import { CgCalendarDue, CgProfile } from "react-icons/cg";
 import { LuListTodo } from "react-icons/lu";
@@ -57,9 +58,16 @@ export default function App({
 					</div>
 					<div className="overflow-y-auto">
 						<div className="p-2">
-							<h1 className="font-semibold py-1 text-3xl text-mbl">
-								👋 Hi, Developer.
-							</h1>
+							<div className="flex justify-between pr-4 items-center">
+								<h1 className="font-semibold py-1 text-3xl text-mbl">
+									👋 Hi, Developer.
+								</h1>
+								<Link href="/">
+									<p className="text-sm font-bold text-mbl cursor-pointer">
+										Sign out
+									</p>
+								</Link>
+							</div>
 							<hr className="text-golden pt-4" />
 						</div>
 						<div className="p-2">

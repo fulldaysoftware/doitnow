@@ -1,9 +1,10 @@
-import Image from "next/image";
+import UserLoginPage from "@/components/LoginPage";
+import UserAppWrapper from "@/components/UserAppWrapper";
 
-export default function Home() {
+export default function LoginPage() {
 	return (
-		<div>
-			<h1>Hello</h1>
-		</div>
+		<UserAppWrapper>
+			<UserLoginPage />
+		</UserAppWrapper>
 	);
 }
