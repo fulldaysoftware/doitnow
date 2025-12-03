@@ -2,7 +2,7 @@ import UserAppWrapper from "@/components/UserAppWrapper";
 import Link from "next/link";
 import { BiLock } from "react-icons/bi";
 import { BsEyeFill } from "react-icons/bs";
-import { MdOutlineAccountBox } from "react-icons/md";
+import { MdOutlineAccountBox, MdOutlineEmail } from "react-icons/md";
 
 export default function CreateUser() {
 	return (
@@ -30,7 +30,7 @@ export default function CreateUser() {
 						<p className="py-2">Email:</p>
 					</label>
 					<div className="flex ring-1 p-1 rounded-md items-center">
-						<MdOutlineAccountBox className="text-3xl" />
+						<MdOutlineEmail className="text-3xl" />
 						<input
 							type="email"
 							autoComplete="false"

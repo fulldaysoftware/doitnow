@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "_database/models/task.model.ts"  ],
   "exclude": ["node_modules"]
 }
