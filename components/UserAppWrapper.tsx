@@ -29,7 +29,7 @@ export default function UserAppWrapper({
 					</div>
 				</div>
 			</div>
-			<div className="w-[35%] h-[70%] my-auto p-4">
+			<div className="w-[35%] h-[80%] my-auto px-4">
 				<div className="bg-gray-300/70 backdrop-blur-md rounded-md ring-1 ring-gray-500/70 shadow-2xl p-4">
 					{children}
 				</div>
