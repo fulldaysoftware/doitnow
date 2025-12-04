@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../initiate";
-
+import sequelize from "../db";
 
 const Task = sequelize.define('Task', {
   id: {
@@ -45,7 +44,8 @@ const Task = sequelize.define('Task', {
   }
 }, {
   tableName: 'tasks',
-  timestamps: true,  // createdAt, updatedAt
+  timestamps: true,
+  
 });
 
-module.exports = Task;
+export default Task
