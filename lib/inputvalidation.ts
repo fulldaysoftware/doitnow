@@ -26,11 +26,11 @@ export const PasswordSchema = z.string()
 
 
 export const SignUpSchema = z.object({
-  fullName: FullNameSchema,
+  fullname: FullNameSchema,
   email: EmailSchema,
   password: PasswordSchema,
-  confirmPassword: PasswordSchema, 
-}).refine((data) => data.password === data.confirmPassword, {
+  cpassword: PasswordSchema, 
+}).refine((data) => data.password === data.cpassword, {
   
   message: "Passwords do not match.",
   path: ["confirmPassword"],

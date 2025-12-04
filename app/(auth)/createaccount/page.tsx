@@ -1,9 +1,7 @@
 "use client";
 import UserAppWrapper from "@/components/UserAppWrapper";
-import {
-
-	SignUpSchema,
-} from "@/lib/inputvalidation";
+import { SignUpSchema } from "@/lib/inputvalidation";
+import axios from "axios";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
 import { BiLock } from "react-icons/bi";
@@ -24,6 +22,7 @@ type error = {
 	cpasword: { err: boolean; msg: string[] };
 };
 export default function CreateUser() {
+	const backurl = process.env.BACKURL ?? "http://localhost:3000";
 	const [cpass, setCpass] = useState<boolean>(false);
 	const [cpass2, setCpass2] = useState<boolean>(false);
 	const [userInfo, setUserInfo] = useState<UserDataType>({
@@ -71,9 +70,11 @@ export default function CreateUser() {
 			setError((prv) => {
 				return { ...prv, ...emptyErrObj };
 			});
-		}
-		else{
-
+		} else {
+			const req = await axios.post(`${backurl}/api/v1/auth/createaccount`, {
+				...userInfo,
+			});
+			console.log(req);
 		}
 	};
 
