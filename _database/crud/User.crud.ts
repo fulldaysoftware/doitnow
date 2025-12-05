@@ -20,3 +20,30 @@ export default async function createUser(data: UserDataTypeServer) {
         return false
     }
 }
+
+export async function getAllUsers() {
+    try {
+        const data = await User.findAll()
+        return {success: true, message: 'all users', data: data}
+
+    }
+    catch(err){
+        return {success: true, message: 'unable to get users'}
+    }
+}
+
+export async function getUser(id: string) {
+    try {
+       
+        const data = await User.findOne({
+            where: {
+                email: id
+            }
+        })
+        return {success: true, message: 'User info', data: data}
+
+    }
+    catch(err){
+        return {success: true, message: 'unable to get user'}
+    }
+}

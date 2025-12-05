@@ -3,10 +3,15 @@ import UserAppWrapper from "@/components/UserAppWrapper";
 import { SignUpSchema } from "@/lib/inputvalidation";
 import axios from "axios";
 import Link from "next/link";
-import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
+import {
+	ChangeEvent,
+	FormEvent,
+	SyntheticEvent,
+	useActionState,
+	useState,
+} from "react";
 import { BiLock } from "react-icons/bi";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import { FaNairaSign } from "react-icons/fa6";
 import { MdOutlineAccountBox, MdOutlineEmail } from "react-icons/md";
 type UserDataType = {
 	fullname: string;
@@ -21,6 +26,7 @@ type error = {
 	password: { err: boolean; msg: string[] };
 	cpasword: { err: boolean; msg: string[] };
 };
+
 export default function CreateUser() {
 	const backurl = process.env.BACKURL ?? "http://localhost:3000";
 	const [cpass, setCpass] = useState<boolean>(false);
@@ -38,16 +44,16 @@ export default function CreateUser() {
 		password: { err: false, msg: [] },
 		cpasword: { err: false, msg: [] },
 	});
-	const handleUserCreation = async (e: SyntheticEvent) => {
+	const handleUserCreation = async () => {
 		let emptyErrObj: error = {
 			fname: { err: false, msg: [] },
 			email: { err: false, msg: [] },
 			password: { err: false, msg: [] },
 			cpasword: { err: false, msg: [] },
 		};
-		e.preventDefault();
+
 		const val = await SignUpSchema.safeParse(userInfo);
-		console.log(val);
+		console.log(val.error?.issues[0].message);
 		if (!val.success) {
 			val.error.issues.map((iss) => {
 				if (iss.path[0] === "fullName") {
@@ -82,8 +88,9 @@ export default function CreateUser() {
 		<UserAppWrapper>
 			<h1 className="text-xl">Welcome User!</h1>
 			<p className="text-sm">Please provide your Information.</p>
+			<p className="text-xs text-red text-center py-1">Error Message</p>
 			<div className="p-1">
-				<form onSubmit={handleUserCreation}>
+				<form action={handleUserCreation}>
 					<div>
 						<label>
 							<p className="py-2">Full Name:</p>
@@ -105,7 +112,7 @@ export default function CreateUser() {
 						</div>
 						<p
 							className={`${
-								!error.fname.err && "hidden"
+								error.fname.err && "hidden"
 							} text-xs py-1 text-end px-4 text-red`}
 						>
 							{error.fname.msg[0]}

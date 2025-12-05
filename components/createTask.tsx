@@ -1,17 +1,13 @@
 "use client";
+import { createTaskAction } from "@/actions/createTask";
 import { useAppContext } from "@/context/appcontext";
-import {
-	ChangeEvent,
-	ChangeEventHandler,
-	FormEvent,
-	TextareaHTMLAttributes,
-	useState,
-} from "react";
+import { actionStateTypes } from "@/types/statustypes";
+import { ChangeEvent, useActionState, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { FcTodoList } from "react-icons/fc";
 import { GrDocumentTime } from "react-icons/gr";
 import { MdOutlinePriorityHigh } from "react-icons/md";
-import { SiDatev } from "react-icons/si";
+
 
 type taskType = {
 	task: string;
@@ -21,6 +17,11 @@ type taskType = {
 };
 
 export default function CreateTaskDialog() {
+	const initialState: actionStateTypes = { error: false, message: "" };
+	const [state, formAction, isPanding] = useActionState(
+		createTaskAction,
+		initialState,
+	);
 	const context = useAppContext();
 	const { isCreateTaskOpen, setIsCreateTaskOpen } = context;
 	const [taskfield, setTaskField] = useState<taskType>({
@@ -52,79 +53,78 @@ export default function CreateTaskDialog() {
 						</button>
 					</div>
 				</div>
-				<div className="w-full grid grid-cols-[3fr_4fr]">
-					<div>
-						<div className="p-1 w-full">
-							<p className="w-full inline-flex items-center">
-								<FcTodoList className="text-mbl text-lg" />
-								<label className="px-2 text-md">What is the Task?</label>
-							</p>
-							<input
-								className="w-full focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2"
-								type="text"
-							/>
-							<p className="text-xs text-center p-1 text-red">eror message</p>
+				<form action={formAction}>
+					<div className="w-full grid grid-cols-[3fr_4fr]">
+						<div>
+							<div className="p-1 w-full">
+								<p className="w-full inline-flex items-center">
+									<FcTodoList className="text-mbl text-lg" />
+									<label className="px-2 text-md">What is the Task?</label>
+								</p>
+								<input
+									className="w-full focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2"
+									type="text"
+								/>
+								<p className="text-xs text-center p-1 text-red">eror message</p>
+							</div>
+							<div className="p-1 w-full">
+								<p className="w-full inline-flex items-center">
+									<MdOutlinePriorityHigh className="text-mbl text-lg" />
+									<label className="px-2 text-md">Express the Priority?</label>
+								</p>
+								<select className="w-full focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2">
+									<option>Neutral</option>
+									<option>Normal</option>
+									<option>Medium</option>
+									<option>Urgent</option>
+								</select>
+								<p className="text-xs text-center p-1 text-red">eror message</p>
+							</div>
+							<div className="p-1 w-full">
+								<p className="w-full inline-flex items-center">
+									<GrDocumentTime className="text-mbl text-lg" />
+									<label className="px-2 text-md">Due Date</label>
+								</p>
+								<input
+									defaultValue={new Date().getDay()}
+									className="w-full focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2"
+									type="date"
+								/>
+								<p className="text-xs text-center p-1 text-red">eror message</p>
+							</div>
 						</div>
-						<div className="p-1 w-full">
-							<p className="w-full inline-flex items-center">
-								<MdOutlinePriorityHigh className="text-mbl text-lg" />
-								<label className="px-2 text-md">Express the Priority?</label>
-							</p>
-							<select className="w-full focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2">
-								<option>Neutral</option>
-								<option>Normal</option>
-								<option>Medium</option>
-								<option>Urgent</option>
-							</select>
-							{/* <input
-								className="w-full focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2"
-								type="text"
-							/> */}
-							<p className="text-xs text-center p-1 text-red">eror message</p>
-						</div>
-						<div className="p-1 w-full">
-							<p className="w-full inline-flex items-center">
-								<GrDocumentTime className="text-mbl text-lg" />
-								<label className="px-2 text-md">Due Date</label>
-							</p>
-							<input
-								className="w-full focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2"
-								type="date"
-							/>
-							<p className="text-xs text-center p-1 text-red">eror message</p>
+						<div>
+							<div className="p-1 w-full h-[80%]">
+								<p className="w-full inline-flex items-center">
+									<FcTodoList className="text-mbl text-lg" />
+									<label className="px-2 text-md">Any Notes?</label>
+								</p>
+								<textarea
+									value={taskfield.note}
+									onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+										setTaskField((prv) => {
+											return { ...prv, note: e.target.value };
+										});
+									}}
+									rows={6}
+									maxLength={450}
+									className="w-full resize-none focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2"
+								></textarea>
+								<p className="text-xs">
+									max: {500 - taskfield.note.length} chars
+								</p>
+							</div>
+							<div className="p-1 w-full flex justify-end">
+								<button className="p-2 mx-2 text-sm font-semibold hover:cursor-pointer bg-golden text-white rounded-md text-center">
+									Clear
+								</button>
+								<button className="p-2 text-sm font-semibold hover:cursor-pointer bg-mbl text-white rounded-md text-center">
+									Add Task
+								</button>
+							</div>
 						</div>
 					</div>
-					<div>
-						<div className="p-1 w-full h-[80%]">
-							<p className="w-full inline-flex items-center">
-								<FcTodoList className="text-mbl text-lg" />
-								<label className="px-2 text-md">Any Notes?</label>
-							</p>
-							<textarea
-								value={taskfield.note}
-								onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-									setTaskField((prv) => {
-										return { ...prv, note: e.target.value };
-									});
-								}}
-								rows={6}
-								maxLength={450}
-								className="w-full resize-none focus:outline-none ring-1 ring-mbl/50 rounded-md text-sm p-2"
-							></textarea>
-							<p className="text-xs">
-								max: {500 - taskfield.note.length} chars
-							</p>
-						</div>
-						<div className="p-1 w-full flex justify-end">
-							<button className="p-2 mx-2 text-sm font-semibold hover:cursor-pointer bg-golden text-white rounded-md text-center">
-								Clear
-							</button>
-							<button className="p-2 text-sm font-semibold hover:cursor-pointer bg-mbl text-white rounded-md text-center">
-								Add Task
-							</button>
-						</div>
-					</div>
-				</div>
+				</form>
 			</div>
 		</dialog>
 	);
